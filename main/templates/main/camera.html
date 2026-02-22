@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="container mt-5 text-center text-light">
+    <h2 class="mb-3">📷 Live Fire & Smoke Detection</h2>
+    <p class="lead">This connects to your webcam and runs YOLO detection in real-time.</p>
+
+    <!-- Django live feed -->
+    <div class="mt-4">
+        <img src="{% url 'live_feed' %}" width="800" height="600" class="border rounded shadow">
+    </div>
+</div>
+{% endblock %}
