@@ -1,0 +1,15 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="overlay">
+  <div class="container">
+    <h1 class="mb-4 text-danger fw-bold">🔥 Smoke & Fire Detection</h1>
+    <p class="lead">AI-powered detection for safety and prevention</p>
+    <div class="d-flex justify-content-center gap-4 mt-4">
+      <a href="{% url 'upload' %}" class="bubble-btn">📂 Upload Image/Video</a>
+      <a href="{% url 'camera' %}" class="bubble-btn">📷 Live Camera</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

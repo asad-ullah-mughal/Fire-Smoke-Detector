@@ -205,3 +205,11 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+# Model files
+models/best.pt
+best.pt
+
+# Settings file
+fire_and_smoke_detection/settings.py

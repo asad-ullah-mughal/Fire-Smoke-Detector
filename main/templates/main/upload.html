@@ -1,0 +1,91 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-light">📂 Upload Image or Video</h2>
+
+    <!-- Upload Form -->
+    <form method="POST" enctype="multipart/form-data" class="mt-4 p-4 rounded form-box mx-auto" onsubmit="showSpinner()">
+        {% csrf_token %}
+        <input type="file" name="file" class="form-control mb-3" accept="image/*,video/*" required>
+        <button type="submit" class="bubble-btn w-100">Upload & Detect 🔍</button>
+    </form>
+
+    <!-- Spinner Overlay -->
+    <div id="spinner-overlay" class="spinner-overlay d-none">
+        <div class="spinner"></div>
+        <p class="text-light mt-3">Processing... Please wait ⏳</p>
+    </div>
+
+    {% if success %}
+    <!-- Results Section -->
+    <div class="row mt-5 text-center">
+        <!-- Original File -->
+        <div class="col-md-6 mb-4">
+            <h4 class="text-light">📤 Original File</h4>
+            {% if uploaded_file_url %}
+                {% if is_video %}
+                    <video controls class="w-100 rounded shadow">
+                        <source src="/{{ uploaded_file_url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% else %}
+                    <img src="/{{ uploaded_file_url }}" class="img-fluid rounded shadow">
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <!-- YOLO Detection Result -->
+        <div class="col-md-6 mb-4">
+            <h4 class="text-light">🤖 YOLO Detection Result</h4>
+            {% if result_file_url %}
+                {% if is_video %}
+                    <video controls class="w-100 rounded shadow">
+                        <source src="/media/{{ result_file_url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% else %}
+                    <img src="/media/{{ result_file_url }}" class="img-fluid rounded shadow">
+                {% endif %}
+            {% else %}
+                <p class="text-warning">⚠️ No detection result found.</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Spinner Styles -->
+<style>
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+.spinner {
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-top: 6px solid #00cfff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.d-none { display: none !important; }
+</style>
+
+<!-- Spinner Script -->
+<script>
+function showSpinner() {
+    document.getElementById("spinner-overlay").classList.remove("d-none");
+}
+</script>
+{% endblock %}

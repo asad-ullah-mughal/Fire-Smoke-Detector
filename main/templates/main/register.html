@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+{% block content %}
+<div class="container mt-5 form-box p-4 text-light">
+  <h2 class="text-center">📝 Register</h2>
+  <h5 class="text-center">📩 Use Email on which you want to get alerts!</h5>
+  <br>
+  <form method="POST" novalidate>
+    {% csrf_token %}
+    
+    <div class="mb-3">
+      {{ form.email.label_tag }}
+      {{ form.email }}
+      {% for error in form.email.errors %}
+        <div class="text-danger small">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.password1.label_tag }}
+      {{ form.password1 }}
+      {% for error in form.password1.errors %}
+        <div class="text-danger small">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.password2.label_tag }}
+      {{ form.password2 }}
+      {% for error in form.password2.errors %}
+        <div class="text-danger small">{{ error }}</div>
+      {% endfor %}
+    </div>
+
+    <button type="submit" class="bubble-btn w-100 mt-3">Register</button>
+  </form>
+
+  <p class="text-center mt-4 fw-bold text-light">
+    Already have an account?   
+    <a href="{% url 'login' %}" 
+       class="text-warning text-decoration-none fw-bold"
+       style="font-size: 16px;">
+      Login
+    </a>
+  </p>
+</div>
+{% endblock %}
